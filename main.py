@@ -21,3 +21,4 @@ stockdata = get_stock_quote(ticker, api_key)
 # --
 
 print(stockdata)
+print(stockdata['symbol'])
