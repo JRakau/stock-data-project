@@ -14,11 +14,13 @@ def get_stock_quote(ticker_symbol, api):
     return response
 
 
-stockdata = get_stock_quote(ticker, api_key)
-
 #
 # Construct
 # --
+ticker = input("Enter your ticker symbol here:\n")
+
+
+stockdata = get_stock_quote(ticker, api_key)
 
 print(stockdata)
 print(stockdata['symbol'])
