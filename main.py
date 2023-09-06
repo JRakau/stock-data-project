@@ -4,16 +4,15 @@ import time
 # dX4gER*E6GN!yEZ */
 
 
-ticker = "AAPL"
 api_key = "74fee5c279404d629efab122626502bb"
 
 
-def get_stock_quote(ticker_symbol, api):
+def get_stock_quote(ticker, key):
     """Get a quote for a given ticker symbol using API
 
     Args:
-        ticker_symbol (String): AAPL Apple stocks or  MSFT Microsoft stocks
-        api (_type_): API Key to access the API
+        ticker (String): AAPL Apple stocks or  MSFT Microsoft stocks
+        key (String): API Key to access the API
 
     Returns:
         _type_: This request will return JSON with the following structure
@@ -53,9 +52,9 @@ def get_stock_quote(ticker_symbol, api):
             "extended_timestamp": 1649845281
             }
     """
-    url = f"https://api.twelvedata.com/quote?symbol={ticker_symbol}&apikey={api}"
-    response = requests.get(url).json()
-    return response
+    url = f"https://api.twelvedata.com/quote?symbol={ticker}&apikey={key}"
+
+    return requests.get(url).json()
 
 
 def main():
@@ -64,25 +63,51 @@ def main():
     It is responsable to run all program functions
 
     """
+    list_stocks = 0
+    list_stock = 0
+    list_stocks = []
+    ticker_input = 0
 
-    print("\n#############################")
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("#############################")
     print("#                           #")
     print("#  Welcome to Your Stocks   #")
     print("#                           #")
     print("#############################\n")
-    ticker = input(
-        "Enter your ticker symbol here: (Or enter \"quit\" to leave)\n")
+    ticker_input = input(
+        "Enter your ticker symbol here: (Or enter \"quit(q)\" to leave)\n")
 
-    while ticker != "quit":
-        stockdata = get_stock_quote(ticker, api_key)
-        # print(stockdata)
-        print("\n##########################################################")
+    while ticker_input != "quit" and ticker_input != "q":
+        try:
+            stockdata = 0
 
-        print(stockdata['symbol'], " ", stockdata['name'],
-              " ", stockdata['open'])
-        print("##########################################################\n")
-        ticker = input(
-            "Enter another ticker symbol here: (Or enter \"quit\" to leave)\n")
+            stockdata = get_stock_quote(ticker_input, api_key)
+            # print(stockdata)
+
+            list_stocks.append(
+                f"{stockdata['symbol']} US${stockdata['high']}  {stockdata['name']}")
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+            print("\n##########################################################")
+            # if list_stocks.count() > 0:
+            for list_stock in list_stocks:
+                print(list_stock)
+
+            print("##########################################################\n")
+            ticker_input = input(
+                "Enter another ticker symbol here: (Or enter \"quit(q)\" to leave)\n")
+
+        except OSError as err:
+            print("OS error:", err)
+            ticker_input = 0
+        except ValueError:
+            print("Could not convert data to an integer.")
+            ticker_input = 0
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            print("Oops!  That was no valid number.  Try again...")
 
 
+"""
+Call Main function
+"""
 main()
