@@ -7,6 +7,21 @@ import time
 api_key = "74fee5c279404d629efab122626502bb"
 
 
+class MyStock:
+    """
+    My Stock class
+    """
+
+    def __init__(self, symbol, name, high_price):
+        # instance attribute
+        self.symbol = symbol
+        self.name = name
+        self.high_price = high_price
+
+    def print_info(self):
+        return f"{self.symbol} US${self.high_price}  {self.name}"
+
+
 def get_stock_quote(ticker, key):
     """Get a quote for a given ticker symbol using API
 
@@ -78,6 +93,12 @@ def main():
             stockdata = get_stock_quote(ticker_input, api_key)
             # print(stockdata)
 
+            myClass = MyStock('symbol', 'name', 'high_price')
+
+            # print(myClass.print_info())
+
+            # list_stocks.append(myClass.print_info())
+
             list_stocks.append(
                 f"{stockdata['symbol']} US${stockdata['high']}  {stockdata['name']}")
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -99,6 +120,7 @@ def main():
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             print("Oops!  That was no valid number.  Try again...")
+            ticker_input = 0
 
 
 """
