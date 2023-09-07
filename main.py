@@ -68,12 +68,6 @@ def main():
     list_stocks = []
     ticker_input = 0
 
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    print("#############################")
-    print("#                           #")
-    print("#  Welcome to Your Stocks   #")
-    print("#                           #")
-    print("#############################\n")
     ticker_input = input(
         "Enter your ticker symbol here: (Or enter \"quit(q)\" to leave)\n")
 
@@ -110,4 +104,11 @@ def main():
 """
 Call Main function
 """
+print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+print("#############################")
+print("#                           #")
+print("#  Welcome to My Stocks     #")
+print("#                           #")
+print("#############################")
+print("\n\n\n")
 main()
