@@ -18,9 +18,6 @@ class MyStock:
         self.name = name
         self.high_price = high_price
 
-    def print_info(self):
-        return f"{self.symbol} US${self.high_price}  {self.name}"
-
 
 def get_stock_quote(ticker, key):
     """Get a quote for a given ticker symbol using API
@@ -73,7 +70,7 @@ def get_stock_quote(ticker, key):
         response = requests.get(url).json()
     except Exception as err:
         print(f"Unexpected on get_stock_quote() {err=}, {type(err)=}")
-        print("Oops!  That was no valid number.  Try again...")
+        print("Oops! Try again...")
 
     return response
 
@@ -85,7 +82,7 @@ def main():
 
     """
     list_stocks = 0
-    list_stock = 0
+    ojt_list_stock = 0
     list_stocks = []
     ticker_input = 0
 
@@ -97,21 +94,16 @@ def main():
             stockdata = 0
 
             stockdata = get_stock_quote(ticker_input, api_key)
-            # print(stockdata)
-
-            myClass = MyStock('symbol', 'name', 'high_price')
-
-            # print(myClass.print_info())
-
-            # list_stocks.append(myClass.print_info())
 
             list_stocks.append(
-                f"{stockdata['symbol']} US${stockdata['high']}  {stockdata['name']}")
+                MyStock(stockdata['symbol'], stockdata['high'], stockdata['name']))
+
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
             print("\n##########################################################")
-            # if list_stocks.count() > 0:
-            for list_stock in list_stocks:
-                print(list_stock)
+
+            for ojt_list_stock in list_stocks:
+                print(ojt_list_stock.symbol, ojt_list_stock.high_price,
+                      ojt_list_stock.name, sep=' ')
 
             print("##########################################################\n")
             ticker_input = input(
