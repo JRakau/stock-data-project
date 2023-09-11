@@ -69,7 +69,13 @@ def get_stock_quote(ticker, key):
     """
     url = f"https://api.twelvedata.com/quote?symbol={ticker}&apikey={key}"
 
-    return requests.get(url).json()
+    try:
+        response = requests.get(url).json()
+    except Exception as err:
+        print(f"Unexpected on get_stock_quote() {err=}, {type(err)=}")
+        print("Oops!  That was no valid number.  Try again...")
+
+    return response
 
 
 def main():
