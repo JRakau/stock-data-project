@@ -66,14 +66,23 @@ def get_stock_quote(ticker, key):
             }
     """
     url = f"https://api.twelvedata.com/quote?symbol={ticker}&apikey={key}"
-    response = 0
+    json_resp = 0
     try:
-        response = requests.get(url).json()
+        json_resp = requests.get(url).json()
+
+        print(f"Response: {json_resp}")
+
+    except OSError as err:
+        print("OS error:", err)
+
+    except ValueError:
+        print("Could not convert data.")
+
     except Exception as err:
         print(f"Unexpected on get_stock_quote() {err=}, {type(err)=}")
         print("Oops! Try again...")
 
-    return response
+    return json_resp
 
 
 def main():
@@ -98,31 +107,32 @@ def main():
 
             stockdata = get_stock_quote(ticker_input, api_key)
 
-            # if (list_stocks.index(stockdata['symbol'])):
-            # ß    print("item ja registrado...")
+            if 'code' not in stockdata:
+                print("if")
+                is_duplicate = 0
+                if list_stocks:
+                    for ojt_list_stock in list_stocks:
+                        if ojt_list_stock.symbol in stockdata['symbol']:
+                            is_duplicate += 1
 
-            # list_stocks.insert(stockdata['symbol'], MyStock(
-            #    stockdata['symbol'], stockdata['name'], stockdata['high']))
-            is_duplicate = 0
-            if list_stocks:
-                for ojt_list_stock in list_stocks:
-                    if ojt_list_stock.symbol not in stockdata['symbol']:
-                        print("Not duplicated")
-                    else:
-                        print("Duplicate symbol")
-                        is_duplicate += 1
-
-                    print(
-                        f"old {ojt_list_stock.symbol} new {stockdata['symbol']} {is_duplicate}")
-
-                if not is_duplicate:
+                    if not is_duplicate:
+                        list_stocks.append(
+                            MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
+                        print("Stock added")
+                else:
                     list_stocks.append(
                         MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
                     print("Stock added")
+
             else:
-                list_stocks.append(
-                    MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
-                print("Stock added")
+                print("Else")
+                status = stockdata['code']
+                if status == 'error':
+                    print(
+                        f"Fail: {stockdata['code']} description: {stockdata['message']}")
+                else:
+                    print(
+                        f"Fail: {status} description: {stockdata['message']}")
 
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
             print("\n##########################################################")
@@ -139,11 +149,11 @@ def main():
             print("OS error:", err)
             break
         except ValueError:
-            print("Could not convert data to an integer.")
+            print("Could not convert data.")
             break
         except Exception as err:
-            print(f"Unexpected {err=}, {type(err)=}")
-            print("Oops!  That was no valid number.  Try again...")
+            print(f"Unexpected on Main {err=}, {type(err)=}")
+            print("Oops! Try again...")
             break
 
 
