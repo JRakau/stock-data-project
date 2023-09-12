@@ -119,21 +119,22 @@ def main():
 
             # list_stocks.insert(stockdata['symbol'], MyStock(
             #    stockdata['symbol'], stockdata['name'], stockdata['high']))
-            is_duplicate = False
+            is_duplicate = 0
             if list_stocks:
                 for ojt_list_stock in list_stocks:
                     if ojt_list_stock.symbol not in stockdata['symbol']:
-                        is_duplicate = False
+                        print("Not duplicated")
                     else:
-                        is_duplicate = True
+                        print("Duplicate symbol")
+                        is_duplicate += 1
+
                     print(
-                        f"old {ojt_list_stock.symbol} new {stockdata['symbol']}")
+                        f"old {ojt_list_stock.symbol} new {stockdata['symbol']} {is_duplicate}")
 
                 if not is_duplicate:
                     list_stocks.append(
                         MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
                     print("Stock added")
-
             else:
                 list_stocks.append(
                     MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
@@ -141,11 +142,6 @@ def main():
 
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
             print("\n##########################################################")
-
-            # clear ojt_list_stock
-            ojt_list_stock = 0
-
-            remove_object_for(list_stocks)
 
             for ojt_list_stock in list_stocks:
                 print(ojt_list_stock.symbol, ojt_list_stock.high_price,
