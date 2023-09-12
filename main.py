@@ -20,22 +20,6 @@ class MyStock:
         self.high_price = high_price
 
 
-def equal_MyStock(a: MyStock, b: MyStock):
-    return a.symbol == b.symbol and a.symbol == b.symbol
-
-
-def remove_object_for(myStocks: List[MyStock]):
-    result: List[MyStock] = []
-    for current in myStocks:
-        found = False
-        for stored in result:
-            if equal_MyStock(current, stored):
-                found = True
-        if found is False:
-            result.append(current)
-    return result
-
-
 def get_stock_quote(ticker, key):
     """Get a quote for a given ticker symbol using API
 
