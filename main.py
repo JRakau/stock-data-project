@@ -107,34 +107,42 @@ def main():
 
             stockdata = get_stock_quote(ticker_input, api_key)
 
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+
+            # Verify if there is any fail on the response from the request API
             if 'code' not in stockdata:
-                print("if")
                 is_duplicate = 0
+
+                # Verify if the list is empty
                 if list_stocks:
+
+                    # CHeching the list if there is any duplicate item
                     for ojt_list_stock in list_stocks:
                         if ojt_list_stock.symbol in stockdata['symbol']:
                             is_duplicate += 1
 
+                    # If not duplicate add to the list
                     if not is_duplicate:
                         list_stocks.append(
                             MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
-                        print("Stock added")
+
+                # Add the list for the first time
                 else:
                     list_stocks.append(
                         MyStock(stockdata['symbol'], stockdata['name'], stockdata['high']))
-                    print("Stock added")
 
+            # IF there is a faulty code on the request
             else:
-                print("Else")
                 status = stockdata['code']
                 if status == 'error':
                     print(
-                        f"Fail: {stockdata['code']} description: {stockdata['message']}")
+                        f"Error: {status} \n Message: {stockdata['message']}\nTry again please.")
                 else:
                     print(
-                        f"Fail: {status} description: {stockdata['message']}")
+                        f"Fail: {status} \n Message: {stockdata['message']}\nTry again please.")
 
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+            # Show List of stockes
+            print("\n\n")
             print("\n##########################################################")
 
             for ojt_list_stock in list_stocks:
@@ -155,6 +163,10 @@ def main():
             print(f"Unexpected on Main {err=}, {type(err)=}")
             print("Oops! Try again...")
             break
+
+    print("\n\n\n")
+    print("Thank you for using MyStock app. Hope see you again later")
+    print("\n\n\n")
 
 
 """
