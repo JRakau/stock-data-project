@@ -69,8 +69,6 @@ def get_stock_quote(ticker, key):
     try:
         json_resp = requests.get(url).json()
 
-        print(f"Response: {json_resp}")
-
     except OSError as err:
         print("OS error:", err)
 
